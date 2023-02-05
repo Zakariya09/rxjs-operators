@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { audit, buffer, bufferCount, bufferTime, bufferToggle, bufferWhen, catchError, concatMap, debounce, delay, distinct, distinctUntilChanged, distinctUntilKeyChanged, elementAt, exhaustMap, filter, first, from, fromEvent, ignoreElements, interval, last, map, Observable, of, retry, retryWhen, sample, single, skip, skipLast, skipUntil, skipWhile, switchMap, take, takeLast, takeUntil, takeWhile, tap, throttle } from 'rxjs';
+import { audit, buffer, bufferCount, bufferTime, bufferToggle, bufferWhen, catchError, combineLatest, concatMap, debounce, delay, distinct, distinctUntilChanged, distinctUntilKeyChanged, elementAt, exhaustMap, filter, first, from, fromEvent, ignoreElements, interval, last, map, Observable, of, retry, retryWhen, sample, single, skip, skipLast, skipUntil, skipWhile, switchMap, take, takeLast, takeUntil, takeWhile, tap, throttle } from 'rxjs';
 import { ajax } from "rxjs/ajax"
 @Component({
   selector: 'app-operators',
@@ -343,49 +343,67 @@ export class OperatorsComponent implements OnInit, AfterViewInit {
     // })
 
     //retryWhen demo
-    let response = {
-      status: '500',
-      data: [
-        { name: 'Zakariya Khan', id: 1 },
-        { name: 'Mohammad Khan', id: 2 },
-      ]
-    };
+    // let response = {
+    //   status: '500',
+    //   data: [
+    //     { name: 'Zakariya Khan', id: 1 },
+    //     { name: 'Mohammad Khan', id: 2 },
+    //   ]
+    // };
 
-    of(...response?.data).pipe(
-      tap((user) => {
-        if (!response?.status.startsWith('2')) {
-          throw response?.status;
-        }
-      }),
-      retryWhen((error) => {
-        return error.pipe(
-          tap((status) => {
-          if (status.startsWith('5')) {
-            throw 'error'
-          }
-          console.log('retrying...')
-        }))
-      })
-    ).subscribe({
-      next: (data) => {
-        console.log(data)
+    // of(...response?.data).pipe(
+    //   tap((user) => {
+    //     if (!response?.status.startsWith('2')) {
+    //       throw response?.status;
+    //     }
+    //   }),
+    //   retryWhen((error) => {
+    //     return error.pipe(
+    //       tap((status) => {
+    //       if (status.startsWith('5')) {
+    //         throw 'error'
+    //       }
+    //       console.log('retrying...')
+    //     }))
+    //   })
+    // ).subscribe({
+    //   next: (data) => {
+    //     console.log(data)
+    //   },
+    //   error: (error) => {
+    //     console.log(error)
+    //   }
+    // })
+
+
+    // setTimeout(() => {
+    //   let status = Math.random();
+    //   if (status < 0.5) {
+    //     response.status = '200'
+    //   } else {
+    //     response.status = '400'
+    //   }
+    // }, 5000)
+
+
+    let observable1$ = new Observable((observer) => {
+      setTimeout(() => {
+        observer.next(1)
       },
-      error: (error) => {
-        console.log(error)
-      }
+        1000)
+    });
+
+    let observable2$ = new Observable((observer) => {
+      setTimeout(() => {
+        observer.next(2)
+      },
+        5000)
+    });
+
+    combineLatest(observable1$, observable2$).subscribe((data) => {
+      console.log("data");
+      console.log(data);
     })
-
-
-    setTimeout(() => {
-      let status = Math.random();
-      if (status < 0.5) {
-        response.status = '200'
-      } else {
-        response.status = '400'
-      }
-    }, 5000)
-
-
   }
 
   //capturing click event using fromEvent 
