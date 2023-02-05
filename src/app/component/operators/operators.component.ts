@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { audit, buffer, bufferCount, bufferTime, bufferToggle, bufferWhen, catchError, combineLatest, concatMap, debounce, delay, distinct, distinctUntilChanged, distinctUntilKeyChanged, elementAt, exhaustMap, filter, first, from, fromEvent, ignoreElements, interval, last, map, Observable, of, retry, retryWhen, sample, single, skip, skipLast, skipUntil, skipWhile, switchMap, take, takeLast, takeUntil, takeWhile, tap, throttle } from 'rxjs';
+import { audit, buffer, bufferCount, bufferTime, bufferToggle, bufferWhen, catchError, combineLatest, concat, concatMap, debounce, delay, distinct, distinctUntilChanged, distinctUntilKeyChanged, elementAt, exhaustMap, filter, first, from, fromEvent, ignoreElements, interval, last, map, Observable, of, retry, retryWhen, sample, single, skip, skipLast, skipUntil, skipWhile, switchMap, take, takeLast, takeUntil, takeWhile, tap, throttle } from 'rxjs';
 import { ajax } from "rxjs/ajax"
 @Component({
   selector: 'app-operators',
@@ -387,65 +387,84 @@ export class OperatorsComponent implements OnInit, AfterViewInit {
 
     //combineLatest demo - all dependent observable should  emit one value
     //in case one of these depdency observable throws error combineLatest will also throws error.
-    let observable1$ = new Observable((observer) => {
-      observer.next(1)
-      setTimeout(() => {
-        observer.next(2)
-      },
-        1000)
-      // observer.error();
-    });
+    // let observable1$ = new Observable((observer) => {
+    //   observer.next(1)
+    //   setTimeout(() => {
+    //     observer.next(2)
+    //   },
+    //     1000)
+    //   // observer.error();
+    // });
 
-    let observable2$ = new Observable((observer) => {
-      observer.next(3)
-      setTimeout(() => {
-        observer.next(4)
-      },
-        5000)
-    });
+    // let observable2$ = new Observable((observer) => {
+    //   observer.next(3)
+    //   setTimeout(() => {
+    //     observer.next(4)
+    //   },
+    //     5000)
+    // });
 
-    combineLatest(observable1$, observable2$).subscribe((data) => {
-      console.log("data");
-      console.log(data);
-    })
+    // combineLatest(observable1$, observable2$).subscribe((data) => {
+    //   console.log("data");
+    //   console.log(data);
+    // })
+
+    //concat operator - it waits to complete first observable then execute second, 
+    // if first observable got error execution will stop for both
+    // let source1$ = of(1, 2, 3, 4);
+    // let source1$ = new Observable((observer) => {
+    //   observer.next(1);
+    //   observer.next(2);
+    //   setTimeout(() => {
+    //     observer.next(3);
+    //     observer.complete();
+    //   }, 2000)
+    // })
+    // let source2$ = of('a', 'b', 'c', 'd');
+
+    // concat(source1$, source2$).subscribe((data) => {
+    //   console.log(data)
+    // });
+
+
   }
 
   //capturing click event using fromEvent 
   ngAfterViewInit(): void {
-    this.clickObservable = fromEvent(document.querySelector("#btn")!, 'click');
-    this.debounceObservable = fromEvent(document.querySelector("#debounce")!, 'click');
+    // this.clickObservable = fromEvent(document.querySelector("#btn")!, 'click');
+    // this.debounceObservable = fromEvent(document.querySelector("#debounce")!, 'click');
 
     //Debouncing Operator
-    this.debounceObservable.pipe(debounce(value => interval(2000))).subscribe((data) => {
-      console.log(data)
-    })
+    // this.debounceObservable.pipe(debounce(value => interval(2000))).subscribe((data) => {
+    //   console.log(data)
+    // })
 
     //SkipUntil
-    interval(1000).pipe(skipUntil(this.clickObservable))
-      .subscribe((number) => {
-        this.numberArr.push(number)
-        console.log(number)
-      })
+    // interval(1000).pipe(skipUntil(this.clickObservable))
+    //   .subscribe((number) => {
+    //     this.numberArr.push(number)
+    //     console.log(number)
+    //   })
   }
 
   //buffer operator 
   setInterval() {
-    interval(1000)
-      .pipe(buffer(this.clickObservable))
-      .subscribe((data: number[]) => {
-        this.numberArr.push(...data);
-        console.log(data)
-      })
+    // interval(1000)
+    //   .pipe(buffer(this.clickObservable))
+    //   .subscribe((data: number[]) => {
+    //     this.numberArr.push(...data);
+    //     console.log(data)
+    //   })
 
   }
 
   //takeUntilDemo
   startTakeUntil() {
-    interval(1000).pipe(
-      takeUntil(this.clickObservable)
-    ).subscribe((data) => {
-      console.log(data)
-    })
+    // interval(1000).pipe(
+    //   takeUntil(this.clickObservable)
+    // ).subscribe((data) => {
+    //   console.log(data)
+    // })
   }
 
 }

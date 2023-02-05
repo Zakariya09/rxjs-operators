@@ -39,11 +39,11 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     //converting event into observable
-    fromEvent(document.querySelector("#addData")!, 'click').subscribe({
-      next: (data) => { console.log("error", data) },
-      error: (error) => { console.log("error", error) },
-      complete: () => { console.log("event observable completed") }
-    })
+    // fromEvent(document.querySelector("#addData")!, 'click').subscribe({
+    //   next: (data) => { console.log("error", data) },
+    //   error: (error) => { console.log("error", error) },
+    //   complete: () => { console.log("event observable completed") }
+    // })
   }
 
 
