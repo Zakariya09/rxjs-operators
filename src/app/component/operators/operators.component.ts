@@ -385,17 +385,21 @@ export class OperatorsComponent implements OnInit, AfterViewInit {
     //   }
     // }, 5000)
 
-
+    //combineLatest demo - all dependent observable should  emit one value
+    //in case one of these depdency observable throws error combineLatest will also throws error.
     let observable1$ = new Observable((observer) => {
+      observer.next(1)
       setTimeout(() => {
-        observer.next(1)
+        observer.next(2)
       },
         1000)
+      // observer.error();
     });
 
     let observable2$ = new Observable((observer) => {
+      observer.next(3)
       setTimeout(() => {
-        observer.next(2)
+        observer.next(4)
       },
         5000)
     });
