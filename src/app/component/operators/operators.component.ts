@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { audit, buffer, bufferCount, bufferTime, bufferToggle, bufferWhen, catchError, combineLatest, concat, concatMap, debounce, delay, distinct, distinctUntilChanged, distinctUntilKeyChanged, elementAt, exhaustMap, filter, first, from, fromEvent, ignoreElements, interval, last, map, Observable, of, retry, retryWhen, sample, single, skip, skipLast, skipUntil, skipWhile, switchMap, take, takeLast, takeUntil, takeWhile, tap, throttle } from 'rxjs';
+import { audit, buffer, bufferCount, bufferTime, bufferToggle, bufferWhen, catchError, combineLatest, concat, concatMap, debounce, delay, distinct, distinctUntilChanged, distinctUntilKeyChanged, elementAt, exhaustMap, filter, first, forkJoin, from, fromEvent, ignoreElements, interval, last, map, Observable, of, retry, retryWhen, sample, single, skip, skipLast, skipUntil, skipWhile, switchMap, take, takeLast, takeUntil, takeWhile, tap, throttle } from 'rxjs';
 import { ajax } from "rxjs/ajax"
 @Component({
   selector: 'app-operators',
@@ -426,6 +426,23 @@ export class OperatorsComponent implements OnInit, AfterViewInit {
     //   console.log(data)
     // });
 
+
+    //Fork join - both observable should complete, both should pass atleast one value,
+    // fork join will always return last emited values from dependent observables and
+    //the ouput will be in the same fashion as per input provided
+    let source1$ = new Observable((observer) => {
+      observer.next(1);
+      observer.next(2);
+      setTimeout(() => {
+        observer.next(3);
+        observer.complete();
+      }, 2000)
+    })
+    let source2$ = of('a', 'b', 'c', 'd');
+
+    forkJoin([source1$, source2$]).subscribe((data) => {
+      console.log(data)
+    });
 
   }
 
