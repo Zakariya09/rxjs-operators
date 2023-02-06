@@ -430,21 +430,23 @@ export class OperatorsComponent implements OnInit, AfterViewInit {
     //Fork join - both observable should complete, both should pass atleast one value,
     // fork join will always return last emited values from dependent observables and
     //the ouput will be in the same fashion as per input provided
-    let source1$ = new Observable((observer) => {
-      observer.next(1);
-      observer.next(2);
-      setTimeout(() => {
-        observer.next(3);
-        observer.complete();
-      }, 2000)
-    })
-    let source2$ = of('a', 'b', 'c', 'd');
+    // let source1$ = new Observable((observer) => {
+    //   observer.next(1);
+    //   observer.next(2);
+    //   setTimeout(() => {
+    //     observer.next(3);
+    //     observer.complete();
+    //   }, 2000)
+    // })
+    // let source2$ = of('a', 'b', 'c', 'd');
 
-    forkJoin([source1$, source2$]).subscribe((data) => {
-      console.log(data)
-    });
+    // forkJoin([source1$, source2$]).subscribe((data) => {
+    //   console.log(data)
+    // });
 
-  }
+    
+
+  } 
 
   //capturing click event using fromEvent 
   ngAfterViewInit(): void {
