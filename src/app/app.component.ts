@@ -7,7 +7,7 @@ import { bufferCount, from, fromEvent, Observable } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit, OnInit {
-  title = 'PipeApp';
+  title = 'RXJS Practice App';
   userArr = [
     { name: "Zakariya", surname: "Khan" },
     { name: "Shadab", surname: "Alam" },
