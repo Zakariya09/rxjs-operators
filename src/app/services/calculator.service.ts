@@ -15,6 +15,6 @@ export class CalculatorService {
 
   substract(fno: number, sno: number) {
     this.logService.log("substraction performed");
-    return fno + sno;
+    return fno - sno;
   }
 }
