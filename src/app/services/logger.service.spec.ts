@@ -1,16 +1,23 @@
-import { TestBed } from '@angular/core/testing';
+import { LoggerService } from "./logger.service"
 
-import { LoggerService } from './logger.service';
-
-describe('LoggerService', () => {
-  let service: LoggerService;
-
+describe("Logger Service Test Cases", () => {
+  let logService: LoggerService;
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(LoggerService);
+    logService = new LoggerService();
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it("should be blank on initialization", () => {
+    expect(logService.logs.length).toBe(0)
   });
-});
+
+  it("should push message to logs", () => {
+    logService.log('log for api');
+    expect(logService?.logs?.length).toBe(1)
+  });
+
+  it("should blank the logs after clear", () => {
+    logService.log('test log ');
+    logService.clear();
+    expect(logService.logs?.length).toBe(0);
+  })
+})

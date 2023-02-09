@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { UnsubscribeObservableComponent } from './component/unsubscribe-observable/unsubscribe-observable.component';
 import { OperatorsComponent } from './component/operators/operators.component';
 import { BufferComponent } from './component/buffer/buffer.component';
+import { StrengthPipe } from './pipes/strength.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     UnsubscribeObservableComponent,
     OperatorsComponent,
-    BufferComponent
+    BufferComponent,
+    StrengthPipe
   ],
   imports: [
     BrowserModule,
