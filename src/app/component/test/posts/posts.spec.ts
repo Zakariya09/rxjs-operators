@@ -21,7 +21,7 @@ describe("Post Component Test Cases", () => {
             }
         ];
         postMockService = jasmine.createSpyObj(['getPost', 'deletePost']);
-        component = new PostsComponent(postMockService);
+        component =  new PostsComponent(postMockService)
     });
 
     //testing delete function (Isolated test cases i.e individual function testing)
