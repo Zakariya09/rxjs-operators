@@ -8,7 +8,8 @@ import { OperatorsComponent } from './component/operators/operators.component';
 import { BufferComponent } from './component/buffer/buffer.component';
 import { StrengthPipe } from './pipes/strength.pipe';
 import { PostsComponent } from './component/test/posts/posts.component';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { SinglePostComponent } from './component/test/single-post/single-post.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http'
     OperatorsComponent,
     BufferComponent,
     StrengthPipe,
-    PostsComponent
+    PostsComponent,
+    SinglePostComponent
   ],
   imports: [
     BrowserModule,

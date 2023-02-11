@@ -1,18 +1,22 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { OperatorsComponent } from './component/operators/operators.component';
+import { PostsComponent } from './component/test/posts/posts.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientModule
       ],
       declarations: [
         AppComponent,
-        OperatorsComponent
-      ],
+        OperatorsComponent,
+        PostsComponent
+      ]
     }).compileComponents();
   });
 
