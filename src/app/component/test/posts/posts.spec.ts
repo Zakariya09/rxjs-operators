@@ -1,6 +1,8 @@
 import { of } from "rxjs";
 import { Post } from "src/app/models/post.model"
 import { PostsComponent } from "./posts.component";
+import { TestBed } from '@angular/core/testing'
+import { PostsService } from "src/app/services/post-service/posts.service";
 
 describe("Post Component Test Cases", () => {
     let Posts: Post[] = [];
@@ -21,7 +23,19 @@ describe("Post Component Test Cases", () => {
             }
         ];
         postMockService = jasmine.createSpyObj(['getPost', 'deletePost']);
-        component =  new PostsComponent(postMockService);
+
+        TestBed.configureTestingModule({
+            providers: [PostsComponent,
+                {
+                    provide: PostsService,
+                    useValue: postMockService
+                }],
+
+        })
+
+        // component = new PostsComponent(postMockService); //init. component with mock instance
+        component = TestBed.inject(PostsComponent);//init component using TestBed instance
+
     });
 
     //testing delete function (Isolated test cases i.e individual function testing)
