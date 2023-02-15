@@ -1,23 +1,26 @@
 import { first } from "rxjs";
 import { SinglePostComponent } from "./single-post.component";
-import { TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 describe("Single Post Component Test Cases", () => {
+  let fixture: ComponentFixture<SinglePostComponent>;
+  let component: SinglePostComponent;
 
-  it("should create a single post component", () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SinglePostComponent]
     });
-    let fixture = TestBed.createComponent(SinglePostComponent);
-    let component = fixture.componentInstance;
+    fixture = TestBed.createComponent(SinglePostComponent);
+    component = fixture.componentInstance;
+  });
+
+  it("should create a single post component", () => {
     expect(component).toBeDefined();
-  })
+  });
 
   it("Should raise an event and pass post object", () => {
-    let component = new SinglePostComponent();
     let post = { id: 1, body: 'body 1', title: 'title' };
     component.post = post;
-
     component.delete.pipe(first()).subscribe((selectedPost) => {
       expect(selectedPost).toEqual(post);
     });
