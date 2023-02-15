@@ -1,7 +1,17 @@
 import { first } from "rxjs";
 import { SinglePostComponent } from "./single-post.component";
+import { TestBed } from '@angular/core/testing'
 
 describe("Single Post Component Test Cases", () => {
+
+  it("should create a single post component", () => {
+    TestBed.configureTestingModule({
+      declarations: [SinglePostComponent]
+    });
+    let fixture = TestBed.createComponent(SinglePostComponent);
+    let component = fixture.componentInstance;
+    expect(component).toBeDefined();
+  })
 
   it("Should raise an event and pass post object", () => {
     let component = new SinglePostComponent();
