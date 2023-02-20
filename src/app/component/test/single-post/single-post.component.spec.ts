@@ -2,6 +2,7 @@ import { first } from "rxjs";
 import { SinglePostComponent } from "./single-post.component";
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { NO_ERRORS_SCHEMA } from "@angular/core";
+import { By } from "@angular/platform-browser";
 
 describe("Single Post Component Test Cases", () => {
   let fixture: ComponentFixture<SinglePostComponent>;
@@ -10,7 +11,7 @@ describe("Single Post Component Test Cases", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SinglePostComponent],
-      schemas:[NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA]
     });
     fixture = TestBed.createComponent(SinglePostComponent);
     component = fixture.componentInstance;
@@ -34,8 +35,12 @@ describe("Single Post Component Test Cases", () => {
     const post = { id: 1, body: 'body 1', title: 'title 1' };
     component.post = post;
     fixture.detectChanges();
-    const dom: HTMLElement = fixture.nativeElement;
-    const a = dom.querySelector('a');
+    // const dom: HTMLElement = fixture.nativeElement;
+    // const a = dom.querySelector('a');
+
+    //using debug element helps to test directive that cannot be covered using just native element
+    const dom = fixture.debugElement;
+    const a = dom.query(By.css('a')).nativeElement
     expect(a?.textContent).toContain(post?.title)
   })
 });
