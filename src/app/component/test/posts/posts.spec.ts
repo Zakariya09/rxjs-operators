@@ -6,6 +6,7 @@ import { PostsService } from "src/app/services/post-service/posts.service";
 import { SinglePostComponent } from "../single-post/single-post.component";
 import { RouterTestingModule } from "@angular/router/testing";
 import {Component, Input} from '@angular/core'
+import { By } from "@angular/platform-browser";
 
 describe("Post Component Test Cases", () => {
     let Posts: Post[] = [];
@@ -72,6 +73,15 @@ describe("Post Component Test Cases", () => {
             postMockService.deletePost.and.returnValue(of(true));
             component.posts = Posts;
         });
+
+        //targetting multiple elements using debug element (Shallow Integration test)
+        it("should render one single post component for each post",()=>{
+            postMockService.getPost.and.returnValue(of(Posts));
+            fixture.detectChanges();
+            const debugElement = fixture.debugElement;
+            const postElements = debugElement.queryAll(By.css('.posts'))
+            expect(postElements?.length).toBe(Posts?.length)
+        })
 
         it("should take posts from getPost Service",()=>{
             postMockService.getPost.and.returnValue(of(Posts));
