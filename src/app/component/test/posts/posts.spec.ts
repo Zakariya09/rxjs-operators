@@ -1,13 +1,16 @@
 import { of } from "rxjs";
 import { Post } from "src/app/models/post.model"
 import { PostsComponent } from "./posts.component";
-import { TestBed } from '@angular/core/testing'
+import { TestBed, ComponentFixture } from '@angular/core/testing'
 import { PostsService } from "src/app/services/post-service/posts.service";
+import { SinglePostComponent } from "../single-post/single-post.component";
+import { RouterTestingModule } from "@angular/router/testing";
 
 describe("Post Component Test Cases", () => {
     let Posts: Post[] = [];
     let component: PostsComponent;
     let postMockService: any;
+    let fixture: ComponentFixture<PostsComponent>;
 
     beforeEach(() => {
         Posts = [
@@ -25,7 +28,11 @@ describe("Post Component Test Cases", () => {
         postMockService = jasmine.createSpyObj(['getPost', 'deletePost']);
 
         TestBed.configureTestingModule({
+            declarations:[PostsComponent, SinglePostComponent
+            ],
+            imports:[RouterTestingModule],
             providers: [PostsComponent,
+                
                 {
                     provide: PostsService,
                     useValue: postMockService
@@ -34,7 +41,12 @@ describe("Post Component Test Cases", () => {
         })
 
         // component = new PostsComponent(postMockService); //init. component with mock instance
-        component = TestBed.inject(PostsComponent);//init component using TestBed instance
+        // component = TestBed.inject(PostsComponent);//init component using TestBed instance
+
+        fixture = TestBed.createComponent( PostsComponent);
+        component = fixture.componentInstance;
+
+        
 
     });
 
@@ -45,6 +57,12 @@ describe("Post Component Test Cases", () => {
             postMockService.deletePost.and.returnValue(of(true));
             component.posts = Posts;
         });
+
+        it("should take posts from getPost Service",()=>{
+            postMockService.getPost.and.returnValue(of(Posts));
+            fixture.detectChanges();
+            expect(component.posts?.length).toBe(2)            
+        })
 
         it(" posts should not be empty", () => {
             expect(Posts?.length > 0).toBe(true);
