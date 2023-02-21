@@ -5,6 +5,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing'
 import { PostsService } from "src/app/services/post-service/posts.service";
 import { SinglePostComponent } from "../single-post/single-post.component";
 import { RouterTestingModule } from "@angular/router/testing";
+import {Component, Input} from '@angular/core'
 
 describe("Post Component Test Cases", () => {
     let Posts: Post[] = [];
@@ -12,6 +13,17 @@ describe("Post Component Test Cases", () => {
     let postMockService: any;
     let fixture: ComponentFixture<PostsComponent>;
 
+    //creating fake component (component mocking)
+    @Component({
+        selector:'app-single-post',
+        template:''
+        })
+
+        class FakeComponent{
+            @Input () post!:Post;
+        }
+
+        
     beforeEach(() => {
         Posts = [
             {
@@ -25,10 +37,13 @@ describe("Post Component Test Cases", () => {
                 title: "title 2"
             }
         ];
+        
+        //mocking fake service
         postMockService = jasmine.createSpyObj(['getPost', 'deletePost']);
 
         TestBed.configureTestingModule({
-            declarations:[PostsComponent, SinglePostComponent
+            declarations:[PostsComponent, FakeComponent,
+                // SinglePostComponent
             ],
             imports:[RouterTestingModule],
             providers: [PostsComponent,
