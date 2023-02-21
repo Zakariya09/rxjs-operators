@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing'
 interface Data {
     name: string
 }
-describe("HttpClient Test Cases",
+describe("HttpClient GET Test Cases",
     () => {
         let httpClient: HttpClient;
         let httpTestingController: HttpTestingController;
