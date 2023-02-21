@@ -5,7 +5,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing'
 import { PostsService } from "src/app/services/post-service/posts.service";
 import { SinglePostComponent } from "../single-post/single-post.component";
 import { RouterTestingModule } from "@angular/router/testing";
-import {Component, Input} from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { By } from "@angular/platform-browser";
 
 describe("Post Component Test Cases", () => {
@@ -15,16 +15,16 @@ describe("Post Component Test Cases", () => {
     let fixture: ComponentFixture<PostsComponent>;
 
     //creating fake component (component mocking)
-    @Component({
-        selector:'app-single-post',
-        template:''
-        })
+    // @Component({
+    //     selector:'app-single-post',
+    //     template:''
+    //     })
 
-        class FakeComponent{
-            @Input () post!:Post;
-        }
+    //     class FakeComponent{
+    //         @Input () post!:Post;
+    //     }
 
-        
+
     beforeEach(() => {
         Posts = [
             {
@@ -38,17 +38,18 @@ describe("Post Component Test Cases", () => {
                 title: "title 2"
             }
         ];
-        
+
         //mocking fake service
         postMockService = jasmine.createSpyObj(['getPost', 'deletePost']);
 
         TestBed.configureTestingModule({
-            declarations:[PostsComponent, FakeComponent,
-                // SinglePostComponent
+            declarations: [PostsComponent,
+                //  FakeComponent,
+                SinglePostComponent
             ],
-            imports:[RouterTestingModule],
+            imports: [RouterTestingModule],
             providers: [PostsComponent,
-                
+
                 {
                     provide: PostsService,
                     useValue: postMockService
@@ -59,10 +60,10 @@ describe("Post Component Test Cases", () => {
         // component = new PostsComponent(postMockService); //init. component with mock instance
         // component = TestBed.inject(PostsComponent);//init component using TestBed instance
 
-        fixture = TestBed.createComponent( PostsComponent);
+        fixture = TestBed.createComponent(PostsComponent);
         component = fixture.componentInstance;
 
-        
+
 
     });
 
@@ -74,8 +75,19 @@ describe("Post Component Test Cases", () => {
             component.posts = Posts;
         });
 
+        //Testing Child Component From Parent Component (Deep Integration Test)
+        it("should check whether exact post is getting send to each post component",()=>{
+            postMockService.getPost.and.returnValue(of(Posts));
+            fixture.detectChanges();
+            const postDebugElements = fixture.debugElement.queryAll(By.directive(SinglePostComponent));
+            for (let i= 0; i< postDebugElements?.length; i++){
+                let debugComponentInstance = postDebugElements[i].componentInstance as SinglePostComponent;
+                expect(debugComponentInstance?.post?.title).toEqual(Posts[i]?.title);
+            }
+        })
+
         //targetting multiple elements using debug element (Shallow Integration test)
-        it("should render one single post component for each post",()=>{
+        it("should render one single post component for each post", () => {
             postMockService.getPost.and.returnValue(of(Posts));
             fixture.detectChanges();
             const debugElement = fixture.debugElement;
@@ -83,10 +95,18 @@ describe("Post Component Test Cases", () => {
             expect(postElements?.length).toBe(Posts?.length)
         })
 
-        it("should take posts from getPost Service",()=>{
+        //Targeting Child Component Using Debug element Directive method (Deep Integration testing)
+        it("should render original post component for each post",()=>{
             postMockService.getPost.and.returnValue(of(Posts));
             fixture.detectChanges();
-            expect(component.posts?.length).toBe(2)            
+            const singlePostComponentInstances = fixture.debugElement.queryAll(By.directive(SinglePostComponent));
+            expect(singlePostComponentInstances?.length).toBe(Posts?.length);
+        })
+
+        it("should take posts from getPost Service", () => {
+            postMockService.getPost.and.returnValue(of(Posts));
+            fixture.detectChanges();
+            expect(component.posts?.length).toBe(2)
         })
 
         it(" posts should not be empty", () => {
