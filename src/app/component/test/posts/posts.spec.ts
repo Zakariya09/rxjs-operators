@@ -76,11 +76,11 @@ describe("Post Component Test Cases", () => {
         });
 
         //Testing Child Component From Parent Component (Deep Integration Test)
-        it("should check whether exact post is getting send to each post component",()=>{
+        it("should check whether exact post is getting send to each post component", () => {
             postMockService.getPost.and.returnValue(of(Posts));
             fixture.detectChanges();
             const postDebugElements = fixture.debugElement.queryAll(By.directive(SinglePostComponent));
-            for (let i= 0; i< postDebugElements?.length; i++){
+            for (let i = 0; i < postDebugElements?.length; i++) {
                 let debugComponentInstance = postDebugElements[i].componentInstance as SinglePostComponent;
                 expect(debugComponentInstance?.post?.title).toEqual(Posts[i]?.title);
             }
@@ -96,7 +96,7 @@ describe("Post Component Test Cases", () => {
         })
 
         //Targeting Child Component Using Debug element Directive method (Deep Integration testing)
-        it("should render original post component for each post",()=>{
+        it("should render original post component for each post", () => {
             postMockService.getPost.and.returnValue(of(Posts));
             fixture.detectChanges();
             const singlePostComponentInstances = fixture.debugElement.queryAll(By.directive(SinglePostComponent));
@@ -128,6 +128,21 @@ describe("Post Component Test Cases", () => {
             for (let post of component.posts) {
                 expect(post).not.toEqual(Posts[1]);
             }
+        });
+
+        it("should detect delete button click", () => {
+            spyOn(component, 'deletePost');
+            postMockService.getPost.and.returnValue(of(Posts));
+            fixture.detectChanges();
+
+            const childComponents = fixture.debugElement.queryAll(By.directive(SinglePostComponent));
+
+            for(let i = 0; i< childComponents.length; i++){
+                childComponents[i].query(By.css('button')).triggerEventHandler('click', { stopPropagation: () => { } });
+                expect(component.deletePost).toHaveBeenCalledWith(Posts[i]);
+            }
+           
+
         });
     })
 
