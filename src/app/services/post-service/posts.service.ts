@@ -20,5 +20,9 @@ export class PostsService {
   getSinglePost(id: number) {
     return this.http.get<Post>(`https://jsonplaceholder.typicode.com/post/${id}`);
   }
+
+  updatePost(post:Post){
+    return this.http.put(`https://jsonplaceholder.typicode.com/post/${post?.id}`, post)
+  }
 }
 

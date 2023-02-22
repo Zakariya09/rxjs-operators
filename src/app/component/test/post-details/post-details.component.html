@@ -1,0 +1,10 @@
+<div *ngIf="post">
+    <p>{{post.title}}</p>
+    <p>{{post.body}}</p>
+
+    <h2>Update Post</h2>
+    <input type="text"  [(ngModel)]="post.title"/>
+    <input type="text"  [(ngModel)]="post.body"/>
+    <button (click)="update(post)">Update Post</button>
+    <button (click)="goback()">Go Back</button>
+</div>

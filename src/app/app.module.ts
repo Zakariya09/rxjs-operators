@@ -9,7 +9,9 @@ import { BufferComponent } from './component/buffer/buffer.component';
 import { StrengthPipe } from './pipes/strength.pipe';
 import { PostsComponent } from './component/test/posts/posts.component';
 import { HttpClientModule } from '@angular/common/http';
-import { SinglePostComponent } from './component/test/single-post/single-post.component'
+import { SinglePostComponent } from './component/test/single-post/single-post.component';
+import { PostDetailsComponent } from './component/test/post-details/post-details.component'
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,12 +20,14 @@ import { SinglePostComponent } from './component/test/single-post/single-post.co
     BufferComponent,
     StrengthPipe,
     PostsComponent,
-    SinglePostComponent
+    SinglePostComponent,
+    PostDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
