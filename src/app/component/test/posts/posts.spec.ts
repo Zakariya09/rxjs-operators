@@ -137,13 +137,26 @@ describe("Post Component Test Cases", () => {
 
             const childComponents = fixture.debugElement.queryAll(By.directive(SinglePostComponent));
 
-            for(let i = 0; i< childComponents.length; i++){
+            for (let i = 0; i < childComponents.length; i++) {
                 childComponents[i].query(By.css('button')).triggerEventHandler('click', { stopPropagation: () => { } });
                 expect(component.deletePost).toHaveBeenCalledWith(Posts[i]);
             }
-           
-
         });
+
+        it("should call delete method in parent when delete method is emitted from Single Post", () => {
+            spyOn(component, 'deletePost');
+            postMockService.getPost.and.returnValue(of(Posts));
+            fixture.detectChanges();
+
+            const childComponents = fixture.debugElement.queryAll(By.directive(SinglePostComponent));
+            for (let i = 0; i < childComponents.length; i++) {
+
+                (childComponents[i].componentInstance as SinglePostComponent).delete.emit(Posts[i]);
+
+                expect(component.deletePost).toHaveBeenCalledWith(Posts[i]);
+    
+            }
+        })
     })
 
 })
