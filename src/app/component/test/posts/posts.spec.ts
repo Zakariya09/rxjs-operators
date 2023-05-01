@@ -131,7 +131,7 @@ describe("Post Component Test Cases", () => {
         });
 
         it("should detect delete button click", () => {
-            spyOn(component, 'deletePost');
+            spyOn(component, 'deletePost'); 
             postMockService.getPost.and.returnValue(of(Posts));
             fixture.detectChanges();
 
