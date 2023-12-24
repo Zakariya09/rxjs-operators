@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SinglePostComponent } from './component/test/single-post/single-post.component';
 import { PostDetailsComponent } from './component/test/post-details/post-details.component'
 import { FormsModule } from '@angular/forms';
+import { DragDropComponent } from './component/drag-drop/drag-drop.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     StrengthPipe,
     PostsComponent,
     SinglePostComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    DragDropComponent
   ],
   imports: [
     BrowserModule,
